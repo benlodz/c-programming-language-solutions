@@ -1,25 +1,31 @@
 #include <stdio.h>
 
-main() {
-	int c,s;
+/* Exercise 1-10: Replace backspaces, tabs, and newlines with the escape character. */
+
+main()
+{
+	int c, s;
 
 	s = '\\';
 
-	while ( (c = getchar()) != EOF) {
-		if (c == '\t') {
+	while ((c = getchar()) != EOF)
+	{
+		if (c == '\t')
+		{
+			putchar(s);
 			c = 't';
-			putchar(s);
 		}
-		if (c == '\b') {
-			c = 'b';
+		if (c == '\b')
+		{
 			putchar(s);
+			c = 'b';
 			/* backspace is Ctrl+H */
 		}
-		if (c == '\n') {
-			c =  'n';
+		if (c == '\n')
+		{
 			putchar(s);
+			c = 'n';
 		}
 		putchar(c);
 	}
 }
-

@@ -3,7 +3,7 @@
 /* Exercise 1-5: Rewrite program to print table in reverse order. */
 
 /* print Fahrenheit-Celsius table */
-int main()
+main()
 {
 	int fahr;
 
