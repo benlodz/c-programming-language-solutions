@@ -1,54 +1,69 @@
 #include <stdio.h>
 #define MAXLINE 100
 
-int lineget(char line[], int maxline);
-void copy(char to[], char from[]);
+/* Exercise 1-18: my_remove all trailing blanks and tabs from each line of input. */
 
-main() {
-	int len;
+int my_getline(char s[], int maxline);
+int my_remove(char s[]);
+
+int main()
+{
 	char line[MAXLINE];
-	char clean[MAXLINE];
 
-
-	while ( lineget(line,MAXLINE) != 0) {
-		copy(clean,line);
-		printf("%s",clean);
+	while (my_getline(line, MAXLINE) > 0)
+	{
+		if (my_remove(line) > 0)
+		{
+			printf("%s", line);
+		}
 	}
-	
-	
-
-	return 0;
 }
 
-int lineget(char s[], int lim) {
+int my_getline(char s[], int maxline)
+{
+	int i, c;
 
-	int c, i;
-	
-	for (i = 0; i < lim -1 && (c=getchar()) != EOF && c != '\n'; ++i) {
+	for (i = 0; i < maxline - 1 && ((c = getchar()) != EOF) && c != '\n'; ++i)
+	{
 		s[i] = c;
 	}
 
-	if (c == '\n') {
+	/* 	clean up by adding a newline. */
+	if (c == '\n')
+	{
 		s[i] = c;
-		i++;
+		++i;
 	}
 
 	s[i] = '\0';
 	return i;
 }
 
-void copy(char to[], char from[]) {
-	int i = 0;
-	int j = 0;
+int my_remove(char s[])
+{
+	int i;
+	i = 0;
 
-	while ((to[i] = from[j]) != '\0') {
-		if (to[i] == '\t') {
-			j++;
-		} else if ( (to[i] == ' ') && (to[i-1] == ' ')) {
-			j++;
-		} else {
-			i++;
-			j++;
-		}
-	}	
+	/* 	Look for the newline */
+	while (s[i] != '\n')
+	{
+		++i;
+	}
+	--i;
+
+	/* 	Get to the next non blank character. */
+	while (i >= 0 && (s[i] == ' ' || s[i] == '\t'))
+	{
+		--i;
+	}
+
+	/* 	Clean up the string by putting a newline and null terminator if (i >= 0) */
+	{
+		++i;
+		s[i] = '\n';
+		++i;
+		s[i] = '\0';
+	}
+
+	return i;
 }
