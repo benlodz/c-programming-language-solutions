@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+/* Kind of crazy how a leetcode medium problem is brought here: https://leetcode.com/problems/evaluate-reverse-polish-notation/
+Anyway, this code isn't too bad and makes sense after reading it a bit. 
+This is more of a template for the 4-3 to 4-10 */
+
+
+
 #define MAXVAL 100 // max depth of the stack
 #define MAXOP 100 // max size of an operator
 #define NUMBER 0 // number was found
 #define BUFSIZE 100 
-
-// Exercise 4-3: Extend the calculator, add modulus operator and provisions for negative numbers
 
 int getop(char []);
 int getch(void);
@@ -19,7 +23,6 @@ int main() {
     int type;
     double op1;
     double op2;
-    int c;
     char s[MAXOP];
 
     while ((type = getop(s)) != EOF) {
@@ -46,10 +49,6 @@ int main() {
                 } else {
                     printf("Error: Division by 0");
                 }
-                break;
-            case '%':
-                op2 = pop();
-                push((int) pop() % (int) op2);
                 break;
             case '\n':
                 printf("\t%.8g", pop());
@@ -89,21 +88,12 @@ int getop(char s[]) {
     while ((s[0] = c = getch()) == ' ' || c == '\t') {}
     s[1] = '\0';
 
-    i = 0;
-
     // if it's not a digit or a fractional part just return
-    if (!isdigit(c) && c != '.' && c != '-' ) {
+    if (!isdigit(c) && c != '.' ) {
         return c;
     }
 
-    if (c == '-') {
-        s[++i] = c = getch();
-        if (!isdigit(c)) {
-            ungetch(c);
-            return '-';
-        }
-    }
-
+    i = 0;
     if (isdigit(c)) {
         /* At the start of the program we assigned s[0] for c, 
         this while loop simply puts c into s while advancing 

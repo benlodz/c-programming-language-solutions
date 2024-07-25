@@ -5,7 +5,7 @@
 123.45e-6 */
 
 // ctype contains functions for string manipulation
-teなに
+
 double atof(char s[]) {
     double val, power;
     int i, sign;

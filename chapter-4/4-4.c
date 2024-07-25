@@ -7,13 +7,19 @@
 #define NUMBER 0 // number was found
 #define BUFSIZE 100 
 
-// Exercise 4-3: Extend the calculator, add modulus operator and provisions for negative numbers
+
+/* Exercise 4-4. Add the commands to print the top elements of the stack without popping, to duplicate it, and to swap the top
+two elements. Add a command to clear the stack. */
 
 int getop(char []);
 int getch(void);
 void ungetch(int);
 void push(double);
 double pop(void);
+int peak(void);
+void duplicate(void);
+void swap(void);
+void clear(void);
 
 int main() {
     int type;
@@ -52,7 +58,19 @@ int main() {
                 push((int) pop() % (int) op2);
                 break;
             case '\n':
-                printf("\t%.8g", pop());
+                printf("\t%.8g\n", pop());
+                break;
+            case 'p':
+                peak();
+                break;
+            case 'c':
+                clear();
+                break;
+            case 'd':
+                duplicate();
+                break;
+            case 's':
+                swap();
                 break;
             default:
                 printf("error unknown command: %s\n", s);
@@ -92,10 +110,11 @@ int getop(char s[]) {
     i = 0;
 
     // if it's not a digit or a fractional part just return
-    if (!isdigit(c) && c != '.' && c != '-' ) {
+    if (!isdigit(c) && c != '.' && c != '-') {
         return c;
     }
 
+    // check if we're dealing with a negative number
     if (c == '-') {
         s[++i] = c = getch();
         if (!isdigit(c)) {
@@ -136,3 +155,34 @@ void ungetch(int c) {
     }
 }
 
+int peak(void) {
+    // remember sp represents next free position in our stack
+    if (sp >= 2) {
+        printf("first element: %f\n", val[sp - 1]);
+        printf("second element: %f\n", val[sp - 2]);
+    } else {
+        printf("error: no enough vals in the stack\n");
+    }
+}
+
+void swap(void) {
+    // we need at least two elements in our stack to swap
+    if (sp >= 2) {
+        double top = val[sp - 1];
+        val[sp - 1] = val[sp - 2];
+        val[sp - 2] = top;
+    } else {
+        printf("error: no enough vals in the stack\n");
+    }
+}
+
+void clear(void) {
+    // clear our stack
+    sp = 0;
+}
+
+void duplicate(void) {
+    double top = pop();
+    push(top);
+    push(top);
+}
