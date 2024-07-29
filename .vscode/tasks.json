@@ -7,7 +7,7 @@
             "label": "build",
             "type": "shell",
             "command": "gcc",
-            "args": ["-o", "${fileDirname}/${fileBasenameNoExtension}", "-g", "${file}"],
+            "args": ["-o", "${fileDirname}/${fileBasenameNoExtension}", "-lm", "-g", "${file}"],
             "problemMatcher" : "$gcc"
         },
         {
